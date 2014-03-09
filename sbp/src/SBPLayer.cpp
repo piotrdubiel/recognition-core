@@ -2,25 +2,37 @@
 
 #include <iostream>
 
-SBPLayer::SBPLayer(int count,int inserts) {
-    for (int i=0; i < count; ++i)
-        neurons.push_back(SBPNeuron(inserts));
+SBPLayer::SBPLayer(int inputs,int outputs) {
+    for (int i=0; i < outputs; ++i) {
+        neurons.push_back(SBPNeuron(inputs));
+    }
 }
 
-vector<float> SBPLayer::classify(vector<float> x) const {
-    vector<float> result;
-    deque<SBPNeuron>::const_iterator i;
-    for (i=neurons.begin(); i != neurons.end(); ++i)
+std::vector<float> SBPLayer::classify(std::vector<float> x) const {
+    std::vector<float> result;
+    std::vector<float>::const_iterator it;
+    //cerr << "(";
+    for (it=x.begin(); it!=x.end(); ++it) {
+    //    cerr << *it << ", ";
+    }
+    //cerr << ")" << endl;
+    std::deque<SBPNeuron>::const_iterator i;
+    //cerr << "{";
+    for (i=neurons.begin(); i != neurons.end(); ++i) {
+        //cerr << (*i).answer(x) << ", ";
         result.push_back((*i).answer(x));
+    }
+    //cerr << "}" << endl;
 
     return result;
 }
 
-vector<float> SBPLayer::get_dy(vector<float> x) const {
-    vector<float> result;
-    deque<SBPNeuron>::const_iterator i;
-    for (i=neurons.begin();i!=neurons.end();++i)
+std::vector<float> SBPLayer::get_dy(std::vector<float> x) const {
+    std::vector<float> result;
+    std::deque<SBPNeuron>::const_iterator i;
+    for (i=neurons.begin();i!=neurons.end();++i) {
         result.push_back((*i).answer_dy(x));
+    }
 
     return result;
 }
@@ -33,12 +45,12 @@ int SBPLayer::size() const {
     return neurons.size();
 }
 
-void SBPLayer::modify(int neuron, vector<float> mod) {
+void SBPLayer::modify(int neuron, std::vector<float> mod) {
     neurons[neuron].modify(mod);
 }
 
-void SBPLayer::load(vector<vector<float> > w) {
-	//if (w.size() != neurons.size()) throw exception();
+void SBPLayer::load(std::vector<std::vector<float> > w) {
+    if (w.size() != neurons.size()) throw exception();
 	for (int i=0; i < neurons.size(); ++i) {
 		neurons[i].load(w[i]);
 	}

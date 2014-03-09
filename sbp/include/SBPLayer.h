@@ -1,27 +1,22 @@
-#ifndef LAYER_H
-#define LAYER_H
+#ifndef SBPLAYER_H
+#define SBPLAYER_H
 
 #include <deque>
 #include <vector>
 #include "SBPNeuron.h"
 
-using namespace std;
-
-
-class SBPLayer
-
-{
+class SBPLayer {
 public:
-    SBPLayer(int count,int inserts);
-    vector<float> classify(vector<float> x) const;
-    vector<float> get_dy(vector<float> x) const;
+    SBPLayer(int,int);
+    std::vector<float> classify(std::vector<float> x) const;
+    std::vector<float> get_dy(std::vector<float> x) const;
     float get_weight(int neuron,int input) const;
     int size() const;
 
-    void modify(int neuron,vector<float> mod);
+    void modify(int neuron,std::vector<float> mod);
     
     void printout() const;
-    void load(vector<vector<float> > w);
+    void load(std::vector<std::vector<float> > w);
 
 private:
     deque<SBPNeuron> neurons;

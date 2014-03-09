@@ -1,5 +1,5 @@
-#ifndef ANNNEURON_H
-#define ANNNEURON_H
+#ifndef SBPNEURON_H
+#define SBPNEURON_H
 
 #include <vector>
 

@@ -6,20 +6,28 @@
 #include <cmath>
 
 SBPNeuron::SBPNeuron(int ins) {
-    for (int i=0; i <= ins; ++i)
+    for (int i=0; i < ins; ++i) {
         weights.push_back(((rand()%100000+1)/100000.0f-0.5f) / sqrt((float) ins));
+    }
 }
 
 float SBPNeuron::answer(vector<float> x) const {
-	x.push_back(1.0f);
-//	if (x.size() != weights.size()) {
-//		cerr<<"vector size error "<<x.size()<<" should be "<<weights.size()<<endl;
-//		throw new exception();
-//	}
+    //x.push_back(1.0f);
+    if (x.size() != weights.size()) {
+        //cerr<<"vector size error "<<x.size()<<" should be "<<weights.size()<<endl;
+        vector<float>::iterator it;
+        //cerr <<"[";
+        for (it=x.begin(); it!=x.end(); ++it) {
+         //   cerr << *it <<", ";
+        }
+        //cerr <<"]" << endl;
+        throw new exception();
+    }
 
 	float result = 0.0f;
-	for (int i=0; i < weights.size(); ++i)
-		result+=weights[i]*x[i];
+    for (int i=0; i < weights.size(); ++i) {
+        result+=weights[i]*x[i];
+    }
 
 	return (1.0f / (1.0f + exp(-result)));
 }
@@ -49,8 +57,9 @@ float SBPNeuron::get_weight(int input) const
 
 
 void SBPNeuron::printout() const {
-	for (vector<float>::const_iterator i=weights.begin();i!=weights.end();++i)
+    for (vector<float>::const_iterator i=weights.begin();i!=weights.end();++i) {
 		cout<<(*i)<<" ";
+    }
 }
 
 void SBPNeuron::load(vector<float> w) {
