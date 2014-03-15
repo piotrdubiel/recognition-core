@@ -6,13 +6,13 @@
 #include <cmath>
 
 SBPNeuron::SBPNeuron(int ins) {
-    for (int i=0; i < ins; ++i) {
+    for (int i=0; i <= ins; ++i) {
         weights.push_back(((rand()%100000+1)/100000.0f-0.5f) / sqrt((float) ins));
     }
 }
 
 float SBPNeuron::answer(vector<float> x) const {
-    //x.push_back(1.0f);
+    x.push_back(1.0f);
     if (x.size() != weights.size()) {
         //cerr<<"vector size error "<<x.size()<<" should be "<<weights.size()<<endl;
         vector<float>::iterator it;
@@ -44,8 +44,14 @@ float SBPNeuron::answer_dy(vector<float> x) const
 
 void SBPNeuron::modify(vector<float> mod)
 {
-    for (int i=0;i<weights.size();++i)
+    if (mod.size() != weights.size()) {
+        cerr<<"mod size error "<<mod.size()<<" should be "<<weights.size()<<endl;
+        throw new std::exception();
+    }
+
+    for (int i=0;i<weights.size();++i) {
         weights[i]+=mod[i];
+    }
 
     //bias+=mod.back();
 }

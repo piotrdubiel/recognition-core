@@ -48,11 +48,6 @@ static PyObject* add_layer(PyObject* self, PyObject* args) {
         vector<float> w = buildFloatVectorFromList(PyTuple_GetItem(args, i));
         weights.push_back(w);
         vector<float>::iterator it;
-        std::cerr <<"[";
-        for (it=w.begin(); it!=w.end(); ++it) {
-            std::cerr << *it <<", ";
-        }
-        std::cerr <<"]" << std::endl;
     }
     network->add_layer(weights);
     Py_INCREF(Py_None);

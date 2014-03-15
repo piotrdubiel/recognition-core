@@ -1,12 +1,13 @@
 from nose.tools import assert_raises
 import pysbp
 
+EPS = 0.7e-2
 
 def load_xor_network_and_classify_test():
     # given
     pysbp.init()
-    pysbp.add_layer([1.0, -1.0], [-1.0, 1.0])
-    pysbp.add_layer([1.0, -1.0])
+    pysbp.add_layer([43.259, 43.268, -66.366], [65.075, 65.101, -27.079])
+    pysbp.add_layer([-29.041, 27.2972, -5.0622])
 
     examples = [[[0.0, 0.0], [0.0]],
                 [[1.0, 0.0], [1.0]],
@@ -16,7 +17,7 @@ def load_xor_network_and_classify_test():
     # when
     def check_examples(input, output):
         answer = pysbp.classify(input)
-        assert answer == output,\
+        assert abs(answer[0] - output[0]) < EPS ,\
             "Network answer for {} should be {}, not {}".format(
                 input, output, answer)
 
@@ -28,7 +29,7 @@ def load_xor_network_and_classify_test():
 def classify_with_random_network_test():
     # given
     pysbp.init()
-    pysbp.add_layer([0.5, 0.5])
+    pysbp.add_layer([0.5, 0.5, 0.5])
 
     # when
     answer = pysbp.classify([1, 0])
@@ -59,12 +60,14 @@ def train_to_solve_xor_test():
                 [[1.0, 1.0], [0.0]]]
 
     pysbp.init()
-    pysbp.add_layer([0.5, 0.5], [0.5, 0.5])
-    pysbp.add_layer([0.5, 0.5])
+    pysbp.add_layer([0.5, 0.5, 0.5], [0.5, 0.5, 0.5])
+    pysbp.add_layer([0.5, 0.5, 0.5])
 
     # when
-    for i in range(10):
+    for i in range(1000):
         for input, output in examples:
             pysbp.train(input, output)
 
     # then
+    print pysbp.classify([0.0, 0.0])
+    print pysbp.classify([1.0, 0.0])
