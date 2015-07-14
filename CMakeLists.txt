@@ -16,5 +16,5 @@ if(VALGRIND_FOUND)
     execute_process(COMMAND valgrind bin/classifier)   
 endif(VALGRIND_FOUND)
 
-add_subdirectory(ann)
+add_subdirectory(cnn)
 add_subdirectory(tests)
